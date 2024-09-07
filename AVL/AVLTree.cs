@@ -1,6 +1,6 @@
 namespace AVL;
 
-public class AVLTree<T>() where T : IComparable
+public class AVLTree<T>() where T : System.IComparable
 {
     public Node<T>? Root { get; private set;  }
 
@@ -8,7 +8,7 @@ public class AVLTree<T>() where T : IComparable
     {
         if (Root is not null)
             return Root.Value;
-        throw new Exception("tree is empty, cannot access root value");
+        throw new System.Exception("tree is empty, cannot access root value");
     }
 
     public void Insert(T value)
@@ -27,7 +27,7 @@ public class AVLTree<T>() where T : IComparable
             node.Right = Insert(node.Right, value);
         else return node;
 
-        node.Height = 1 + Math.Max(Height(node.Left), Height(node.Right));
+        node.Height = 1 + System.Math.Max(Height(node.Left), Height(node.Right));
         int balance = GetBalance(node);
 
 
