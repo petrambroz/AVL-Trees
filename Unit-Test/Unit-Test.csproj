@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>Unit_Test</RootNamespace>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
