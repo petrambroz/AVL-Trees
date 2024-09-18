@@ -1,0 +1,5 @@
+image: mcr.microsoft.com/dotnet/sdk
+
+unittests:
+  script:
+    - dotnet test
