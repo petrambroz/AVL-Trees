@@ -60,4 +60,28 @@ public class Tests
         tree.Insert(-2);
         Assert.That(tree.GetBalance(tree.Root), Is.EqualTo(1));
     }
+
+    [Test]
+    public void TestFind()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(5);
+        tree.Insert(7);
+        tree.Insert(3);
+        tree.Insert(-2);
+        tree.Insert(9);
+        Assert.That(tree.Find(-2).Value, Is.EqualTo(-2));
+    }
+
+    [Test]
+    public void TestFindNull()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(5);
+        tree.Insert(7);
+        tree.Insert(3);
+        tree.Insert(-2);
+        tree.Insert(9);
+        Assert.That(tree.Find(-1), Is.Null);
+    }
 }

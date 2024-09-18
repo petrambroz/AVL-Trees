@@ -97,4 +97,19 @@ public class AVLTree<T>() where T : System.IComparable
         return node?.Height ?? 0;
     }
 
+    public Node<T>? Find(T value)
+    // return a node with given value, return null if not found
+    {
+        return Find(Root, value);
+    }
+
+    private Node<T>? Find(Node<T>? node, T value)
+    {
+        while (node is not null && value.CompareTo(node.Value) != 0)
+        {
+            node = value.CompareTo(node.Value) < 0 ? node.Left : node.Right;
+        }
+        return node;
+    }
+
 }
