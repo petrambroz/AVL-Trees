@@ -112,4 +112,37 @@ public class AVLTree<T>() where T : System.IComparable
         return node;
     }
 
+    public Node<T>? FindMax()
+    {
+        //
+        Node<T>? node = Root;
+        if (node is null)
+            return null;
+        return FindMax(node);
+    }
+
+    public Node<T>? FindMin()
+    {
+        Node<T>? node = Root;
+        if (node is null)
+            return null;
+        return FindMin(node);
+    }
+
+    private Node<T> FindMin(Node<T> node)
+        // find the smallest node in given subtree
+    {
+        while (node.Left is not null)
+            node = node.Left;
+        return node;
+    }
+
+    private Node<T> FindMax(Node<T> node)
+        // find the largest node in given subtree
+    {
+        while (node.Right is not null)
+            node = node.Right;
+        return node;
+    }
+
 }
