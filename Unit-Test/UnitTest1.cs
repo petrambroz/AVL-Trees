@@ -23,7 +23,7 @@ public class Tests
     //  test if an exception is thrown when trying to access a root value of an empty tree
     {
         AVLTree<int> tree = new AVLTree<int>();
-        Assert.Throws<System.Exception>(MethodThatThrows);
+        Assert.Throws<System.NullReferenceException>(MethodThatThrows);
 
         void MethodThatThrows()
         {

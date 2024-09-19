@@ -19,7 +19,7 @@ public class AVLTree<T> where T : System.IComparable
     {
         if (Root is not null)
             return Root.Value;
-        throw new System.Exception("tree is empty, cannot access root value");
+        throw new System.NullReferenceException("tree is empty, cannot access root value");
     }
 
     /// <summary>
