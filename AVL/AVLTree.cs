@@ -37,13 +37,14 @@ public class AVLTree<T> where T : System.IComparable
     }
 
     private Node<T> Insert(Node<T>? node, T value)
-    // recursively insert nodes while mainaining balance
     {
+        // recursively insert nodes while mainaining balance
         if (node is null)
         {
             Count++;
             return new Node<T>(value);
         }
+
         if (value.CompareTo(node.Value) < 0)
             node.Left = Insert(node.Left, value);
         else if (value.CompareTo(node.Value) > 0)
@@ -103,6 +104,7 @@ public class AVLTree<T> where T : System.IComparable
 
         return nodeX;
     }
+
     /// <summary>
     /// Calculates the balance of given node = Height(left successor) - Height(right successor).
     /// </summary>
@@ -121,6 +123,7 @@ public class AVLTree<T> where T : System.IComparable
         // null node has height of 0
         return node?.Height ?? 0;
     }
+
     /// <summary>
     /// Finds and returns a node in the tree using binary search. Thanks to the fact that the tree is balanced, function
     /// takes O(log(N)) time where N is the count of nodes in tree. Returns null if node with given value is not found.
@@ -130,23 +133,24 @@ public class AVLTree<T> where T : System.IComparable
     public Node<T>? Find(T value)
     // return a node with given value, return null if not found
     {
+        // return a node with given value, return null if not found
         return Find(Root, value);
     }
 
     private Node<T>? Find(Node<T>? node, T value)
-    // Travesrses down the tree using binary search until a node with correct value is found. Can start in any node.
-    // Returns null if node is not found.
     {
+        // Travesrses down the tree using binary search until a node with correct value is found. Can start in any node.
+        // Returns null if node is not found.
         while (node is not null && value.CompareTo(node.Value) != 0)
         {
             node = value.CompareTo(node.Value) < 0 ? node.Left : node.Right;
         }
+
         return node;
     }
 
     public Node<T>? FindMax()
     {
-        //
         Node<T>? node = Root;
         if (node is null)
             return null;
@@ -162,8 +166,8 @@ public class AVLTree<T> where T : System.IComparable
     }
 
     private Node<T> FindMin(Node<T> node)
-        // find the smallest node in given subtree
     {
+        // find the smallest node in given subtree
         while (node.Left is not null)
             node = node.Left;
         return node;
