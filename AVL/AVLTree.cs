@@ -13,9 +13,13 @@ public class AVLTree<T> where T : System.IComparable
         throw new System.Exception("tree is empty, cannot access root value");
     }
 
-    public void Insert(T value)
+    public bool Insert(T value)
     {
+        int originalCount = Count;
         Root = Insert(Root, value);
+        if (originalCount < Count)
+            return true;
+        return false;
     }
 
     private Node<T> Insert(Node<T>? node, T value)
