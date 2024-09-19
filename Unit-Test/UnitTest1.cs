@@ -17,6 +17,7 @@ public class Tests
         tree.Insert(testVal);
         Assert.That(tree.RootValue(), Is.EqualTo(testVal));
     }
+
     [Test]
     public void TestEmptyTree()
     //  test if an exception is thrown when trying to access a root value of an empty tree
@@ -29,6 +30,7 @@ public class Tests
             tree.RootValue();
         }
     }
+
     [Test]
     public void TestSimpleInsert()
     {
@@ -50,6 +52,7 @@ public class Tests
         tree.Insert(9);
         Assert.That(tree.GetBalance(tree.Root), Is.EqualTo(0));
     }
+
     [Test]
     public void TestBalance2()
     {

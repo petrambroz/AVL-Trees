@@ -1,9 +1,9 @@
 namespace AVL;
 
-public class AVLTree<T>() where T : System.IComparable
+public class AVLTree<T> where T : System.IComparable
 {
     public Node<T>? Root { get; private set; }
-    public int Count { get; private set; } = 0;
+    public int Count { get; private set; }
 
 
     public T RootValue()
