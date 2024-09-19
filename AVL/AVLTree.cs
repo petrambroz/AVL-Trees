@@ -6,6 +6,15 @@ public class AVLTree<T> where T : System.IComparable
     public int Count { get; private set; }
 
 
+    /// <summary>
+    /// Returns the value of root node.
+    /// </summary>
+    /// <returns>
+    /// Generic T value of root node, null if root doesn't exist.
+    /// </returns>
+    /// <exception cref="RootValue">
+    /// Throws NullReferenceException if root is null.
+    /// </exception>
     public T RootValue()
     {
         if (Root is not null)
@@ -13,6 +22,11 @@ public class AVLTree<T> where T : System.IComparable
         throw new System.Exception("tree is empty, cannot access root value");
     }
 
+    /// <summary>
+    /// Inserts a new node into the AVL tree while keeping it balanced. Returns a boolean indicating whether the node
+    /// was actually inserted.
+    /// </summary>
+    /// <returns>Bool: True if node was inserted. False if node with same value was already present.</returns>
     public bool Insert(T value)
     {
         int originalCount = Count;
@@ -89,7 +103,14 @@ public class AVLTree<T> where T : System.IComparable
 
         return nodeX;
     }
-
+    /// <summary>
+    /// Calculates the balance of given node = Height(left successor) - Height(right successor).
+    /// </summary>
+    /// <param name="node"> Node in the tree of which the balance will be calculated. </param>
+    /// <returns>
+    /// Integer = Height(left successor) - Height(right successor). If the tree is balanced, it should
+    /// fall between -1 and 1.
+    /// </returns>
     public int GetBalance(Node<T> node)
     {
         return Height(node.Left) - Height(node.Right);
@@ -100,7 +121,12 @@ public class AVLTree<T> where T : System.IComparable
         // null node has height of 0
         return node?.Height ?? 0;
     }
-
+    /// <summary>
+    /// Finds and returns a node in the tree using binary search. Thanks to the fact that the tree is balanced, function
+    /// takes O(log(N)) time where N is the count of nodes in tree. Returns null if node with given value is not found.
+    /// </summary>
+    /// <param name="value">Value of the node function will try to find.</param>
+    /// <returns>Node with given value, null if no such node found.</returns>
     public Node<T>? Find(T value)
     // return a node with given value, return null if not found
     {
@@ -108,6 +134,8 @@ public class AVLTree<T> where T : System.IComparable
     }
 
     private Node<T>? Find(Node<T>? node, T value)
+    // Travesrses down the tree using binary search until a node with correct value is found. Can start in any node.
+    // Returns null if node is not found.
     {
         while (node is not null && value.CompareTo(node.Value) != 0)
         {
