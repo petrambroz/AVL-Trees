@@ -56,34 +56,33 @@ public class AVLTree<T> where T : System.IComparable<T>
         else return node;
 
         node.Height = 1 + System.Math.Max(Height(node.Left), Height(node.Right));
-        return BalanceNode(node, value);
+        return BalanceNode(node);
     }
 
-    private Node<T> BalanceNode(Node<T> node, T value)
+    private Node<T> BalanceNode(Node<T> node)
     {
         int balance = GetBalance(node);
-        if (balance > 1 && value.CompareTo(node.Left.Value) < 0)
-            return RotateRight(node);
-
-        if (balance < -1 && value.CompareTo(node.Right.Value) > 0)
-            return RotateLeft(node);
-
-        if (balance > 1 && value.CompareTo(node.Left.Value) > 0)
+        if (balance > 1)
         {
-            node.Left = RotateLeft(node.Left);
+            if (node.Left is not null &&  GetBalance(node.Left) < 0)
+                node.Left = RotateLeft(node.Left);
             return RotateRight(node);
         }
-
-        if (balance < -1 && value.CompareTo(node.Right.Value) < 0)
+        if (balance < -1)
         {
-            node.Right = RotateRight(node.Right);
+            if (node.Right is not null && GetBalance(node.Right) > 0)
+                node.Right = RotateRight(node.Right);
             return RotateLeft(node);
         }
+
         return node;
     }
+
     private Node<T> RotateLeft(Node<T> nodeX)
     {
-        Node<T> nodeY = nodeX.Right!;
+        if (nodeX.Right is null)
+            throw new System.InvalidOperationException("Can't perform left rotation on a node without right child");
+        Node<T> nodeY = nodeX.Right;
         Node<T>? alpha = nodeY.Left;
 
         nodeY.Left = nodeX;
@@ -97,7 +96,9 @@ public class AVLTree<T> where T : System.IComparable<T>
 
     private Node<T> RotateRight(Node<T> nodeY)
     {
-        Node<T> nodeX = nodeY.Left!;
+        if (nodeY.Left is null)
+            throw new System.InvalidOperationException("Can't perform right rotation on a node without left child");
+        Node<T> nodeX = nodeY.Left;
         Node<T>? alpha = nodeX.Right;
 
         nodeX.Right = nodeY;
@@ -233,7 +234,7 @@ public class AVLTree<T> where T : System.IComparable<T>
         if (node is not null)
         {
             node.Height = 1 + System.Math.Max(Height(node.Left), Height(node.Right));
-            return BalanceNode(node, node.Value);
+            return BalanceNode(node);
         }
 
         return null;
