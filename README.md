@@ -1,98 +1,55 @@
-# student
+# Programming II semester project
 
+This is a semsester programming project for the Programming II (NPRG031) subject at Charles University.
+The topic of this project is AVL tree library.
+The project is developed and maintained by Petr Ambrož.
 
-Tady bude Váš zápočtový program...
+## Brief introduction
 
+The goal of this project is to provide a library implementing an AVL tree class in C#, which will allow its user to
+create generic AVL trees. Generic implementation means, that it's up to the user to decide what data type will the nodes
+store, while the only requirement is that the data type must be derived from System.IComparable interface. Binary search
+trees (which are AVL trees based on) rely on comparing elements to decide which is 'larger' and which is 'smaller'.
+Suitable data types are therefore integers, chars, strings and many more. Find further information about the IComparable
+interface [here](https://learn.microsoft.com/en-us/dotnet/api/system.icomparable?view=net-8.0) on Microsoft's official
+C#/.NET documentation website.
 
+## What are AVL trees?
 
+AVL tree is an advanced version of a binary search tree (shortened to BST). The biggest downside to regular BST is the
+worst-case depth is O(N) (N is the number of nodes) A perfectly balanced BST has a height of log(N). AVL trees don't
+seek perfect balance, but they maintain a very important property: for each node, the difference in height of both of
+its subtrees is at most 1. This way, AVL trees are able to maintain O(log N) depth at all times.  
+This is achieved using rotations – swapping nodes in a way which doesn't break the binary search tree property, but 
+changes the balance of a node.
 
+## What this library provides
 
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.mff.cuni.cz/teaching/nprg031/2324-summer/common/student.git
-git branch -M master
-git push -uf origin master
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.mff.cuni.cz/teaching/nprg031/2324-summer/common/student/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+This library can be added to any C# project which uses .NET 8 runtime. Other versions were not tested, use at your risk.
+Each method and function has an in-code XML documentation explaining its purpose and use.
+Algorithms used in this project are from knowledge gained during my studies at Charles University, or from the book
+*Průvodce labyrintem algoritmů* written by Martin Mareš, Tomáš Valla, published in 2022 by CZ.NIC, available 
+[here](http://pruvodce.ucw.cz).
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Creating an AVL tree
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+`AVLTree<T> tree = new AVLTree<T>();` creates a new empty AVL tree. `T` indicates the class is generic and the `T`
+should be replaced by any data type derived from System.IComparable, such as `int`.  
+`AVLTree<int> tree = new AVLTree<int>();` creates a tree with nodes storing `int`.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### Overview of public methods and functions
+* Count() -- returns an Int32 indicating the current number of nodes present in the tree
+* Delete(value) -- 
+* DFSInorder, DFSPreorder, DFSPostorder -- IEnumerable, which can be used in a foreach loop, traversing the tree in either preorder, postorder or inorder DFS traversal, yields node objects
+* Find(value) -- returns a node with given value, null if no such node exists in the tree
+* FindMax() -- returns the largest (rightmost) node in the tree, null if tree is empty
+* FindMin() -- returns the smallest (leftmost) node in the tree, null if tree is empty
+* GetBalance(node object) -- returns a balance of given node -- height of right subtree - height of left subtree
+* InRange(low, high) --  Returns a number of nodes, which have a value in a given closed interval, low is the start of the interval, high is the end
+* Insert(value) -- inserts a new node into tree, returns true if node was inserted, false if node with same value was already present
+* Next() -- returns a successor (smallest larger node) to a node with given value, returns null if node with given value wasn't found or the node is the largest node in the tree
+* RootValue() -- returns the value of root node
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### Insert(value)
