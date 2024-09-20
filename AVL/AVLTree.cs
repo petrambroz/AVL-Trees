@@ -131,9 +131,7 @@ public class AVLTree<T> where T : System.IComparable
     /// <param name="value">Value of the node function will try to find.</param>
     /// <returns>Node with given value, null if no such node found.</returns>
     public Node<T>? Find(T value)
-    // return a node with given value, return null if not found
     {
-        // return a node with given value, return null if not found
         return Find(Root, value);
     }
 
@@ -149,6 +147,10 @@ public class AVLTree<T> where T : System.IComparable
         return node;
     }
 
+    /// <summary>
+    /// Finds and returns the largest (rightmost) node in the tree.
+    /// </summary>
+    /// <returns>The largest node in tree. Null if tree is empty.</returns>
     public Node<T>? FindMax()
     {
         Node<T>? node = Root;
@@ -157,6 +159,10 @@ public class AVLTree<T> where T : System.IComparable
         return FindMax(node);
     }
 
+    /// <summary>
+    /// Finds and returns the smallest (leftmost) node in the tree.
+    /// </summary>
+    /// <returns>The smallest node in tree. Null if tree is empty.</returns>
     public Node<T>? FindMin()
     {
         Node<T>? node = Root;
