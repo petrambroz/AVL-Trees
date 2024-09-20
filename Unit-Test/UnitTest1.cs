@@ -209,4 +209,66 @@ public class Tests
         Assert.That(tree.GetBalance(tree.Root), Is.InRange(-1, 1));
     }
 
+    [Test]
+    public void TestNext()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(6);
+        tree.Insert(2);
+        tree.Insert(5);
+        tree.Insert(12);
+        tree.Insert(-5);
+        tree.Insert(22);
+        tree.Insert(-2);
+        tree.Delete(2);
+        Assert.That(tree.Next(12)!.Value, Is.EqualTo(22));
+    }
+
+    [Test]
+    public void TestNextOfMaximum()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(6);
+        tree.Insert(2);
+        tree.Insert(5);
+        tree.Insert(12);
+        tree.Insert(-5);
+        tree.Insert(22);
+        tree.Insert(-2);
+        tree.Delete(2);
+        Assert.That(tree.Next(22), Is.Null);
+    }
+
+    [Test]
+    public void TestInRange()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        tree.Insert(9);
+        tree.Delete(2);
+        Assert.That(tree.InRange(1,3), Is.EqualTo(2));
+    }
+
+    [Test]
+    public void TestInRange2()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(12);
+        tree.Insert(0);
+        tree.Insert(56);
+        tree.Insert(-3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        tree.Insert(9);
+        tree.Delete(2);
+        tree.Delete(1);
+        Assert.That(tree.InRange(0,12), Is.EqualTo(5));
+    }
 }

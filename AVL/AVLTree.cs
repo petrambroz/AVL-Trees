@@ -238,4 +238,67 @@ public class AVLTree<T> where T : System.IComparable<T>
 
         return null;
     }
+
+    /// <summary>
+    /// Finds and returns a node which
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public Node<T>? Next(T value)
+    {
+        // finds a succesor to a node with given value, return null if doesn't exist
+        Node<T>? node = Find(value);
+        if (node is null)
+            // value not found, can't have a successor
+            return null;
+        if (node.Right is not null)
+            // the successor is certainly in the right subtree
+        {
+            return FindMin(node.Right);
+        }
+
+        if (Root is null)
+            return null;
+        Node<T>? successor = null;
+        Node<T>? ancestor = Root;
+
+        while (ancestor is not null)
+        {
+            if (value.CompareTo(ancestor.Value) < 0)
+            {
+                successor = ancestor;
+                ancestor = ancestor.Left;
+            }
+            else if (value.CompareTo(ancestor.Value) > 0)
+                ancestor = ancestor.Right;
+            else break;
+        }
+
+        return successor;
+    }
+
+    /// <summary>
+    /// Returns a number of nodes, which have a value in a given closed interval.
+    /// </summary>
+    /// <param name="low">Lower endpoint of the interval.</param>
+    /// <param name="high">Higher endpoint of the interval.</param>
+    /// <returns>Number of nodes in the given interval.</returns>
+    public int InRange(T low, T high)
+    {
+        if (Root is not null)
+            return InRange(Root, low, high);
+        return 0;
+    }
+
+    private int InRange(Node<T>? node, T low, T high)
+    {
+        // returns a count of nodes in both subtrees that have a value inside given interval
+        if (node is null)
+            return 0;
+        if (node.Value.CompareTo(low) >= 0 && node.Value.CompareTo(high) <= 0)
+            return 1 + InRange(node.Left, low, high) + InRange(node.Right, low, high);
+        if (node.Value.CompareTo(low) < 0)
+            return InRange(node.Right, low, high);
+        return InRange(node.Left, low, high);
+    }
 }
