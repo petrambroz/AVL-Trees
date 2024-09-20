@@ -26,6 +26,101 @@ public class AVLTree<T> where T : System.IComparable<T>
         throw new System.NullReferenceException("tree is empty, cannot access root value");
     }
 
+    private enum TraversalOrder
+    {
+        InOrder,
+        PreOrder,
+        PostOrder
+    }
+
+    /// <summary>
+    /// Performs a depth-first in-order traversal of the AVL tree. This traversal returns nodes in ascending order.
+    /// </summary>
+    /// <returns>
+    /// An enumerable collection of nodes in in-order sequence.
+    /// </returns>
+    public System.Collections.Generic.IEnumerable<T> DFSInOrder()
+    {
+        return DFS(TraversalOrder.InOrder);
+    }
+
+    /// <summary>
+    /// Performs a depth-first pre-order traversal of the AVL tree.
+    /// In pre-order traversal, the nodes are recursively visited in the following order:
+    /// </summary>
+    /// <returns>
+    /// An enumerable collection of nodes in pre-order sequence.
+    /// </returns>
+    public System.Collections.Generic.IEnumerable<T> DFSPreOrder()
+    {
+        return DFS(TraversalOrder.PreOrder);
+    }
+
+    /// <summary>
+    /// Performs a depth-first post-order traversal of the AVL tree.
+    /// In post-order traversal, the nodes are recursively visited in the following order:
+    /// </summary>
+    /// <returns>
+    /// An enumerable collection of nodes in post-order sequence.
+    /// </returns>
+    public System.Collections.Generic.IEnumerable<T> DFSPostOrder()
+    {
+        return DFS(TraversalOrder.PostOrder);
+    }
+
+    /// <summary>
+    /// Performs a Breadth-First Search (BFS) traversal of the tree.
+    /// </summary>
+    /// <returns>Enumerable containing values of the nodes in BFS order.</returns>
+    public System.Collections.Generic.IEnumerable<T> BFS()
+    {
+        if (Root is null)
+            yield break;
+
+        System.Collections.Generic.Queue<Node<T>> queue = new System.Collections.Generic.Queue<Node<T>>();
+        queue.Enqueue(Root);
+
+        while (queue.Count > 0)
+        {
+            Node<T> current = queue.Dequeue();
+            yield return current.Value;
+
+            if (current.Left is not null)
+                queue.Enqueue(current.Left);
+            if (current.Right is not null)
+                queue.Enqueue(current.Right);
+        }
+    }
+
+
+    private System.Collections.Generic.IEnumerable<T> DFS(TraversalOrder order)
+    {
+        return DFS(Root, order);
+    }
+
+    private System.Collections.Generic.IEnumerable<T> DFS(Node<T>? node, TraversalOrder order)
+    {
+        if (node is null)
+            yield break;
+
+        if (order == TraversalOrder.PreOrder)
+            yield return node.Value;
+
+        foreach (var value in DFS(node.Left, order))
+            yield return value;
+
+        if (order == TraversalOrder.InOrder)
+            yield return node.Value;
+
+        foreach (var value in DFS(node.Right, order))
+            yield return value;
+
+        if (order == TraversalOrder.PostOrder)
+            yield return node.Value;
+    }
+
+
+
     /// <summary>
     /// Inserts a new node into the AVL tree while keeping it balanced. Returns a boolean indicating whether the node
     /// was actually inserted.
