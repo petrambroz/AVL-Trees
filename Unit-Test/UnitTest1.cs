@@ -8,14 +8,14 @@ public class Tests
     public void Setup()
     {
     }
-
+    // Many nullable warnings are intentionally supressed with the '!' mark, because only non-problematic values are
+    // used in possibly null-returning functions.
     [Test]
     public void TestEmptyInsertion()
     {
-        const int testVal = 5;
         AVLTree<int> tree = new AVLTree<int>();
-        tree.Insert(testVal);
-        Assert.That(tree.RootValue(), Is.EqualTo(testVal));
+        tree.Insert(5);
+        Assert.That(tree.RootValue(), Is.EqualTo(5));
     }
 
     [Test]
@@ -24,7 +24,6 @@ public class Tests
     {
         AVLTree<int> tree = new AVLTree<int>();
         Assert.Throws<System.NullReferenceException>(MethodThatThrows);
-
         void MethodThatThrows()
         {
             tree.RootValue();
@@ -145,7 +144,7 @@ public class Tests
         tree.Insert(5);
         tree.Insert(4);
         tree.Insert(9);
-        Assert.That(tree.GetBalance(tree.Root), Is.InRange(-1,1));
+        Assert.That(tree.GetBalance(tree.Root!), Is.InRange(-1,1));
     }
 
     [Test]
@@ -158,7 +157,7 @@ public class Tests
         tree.Insert("kocka");
         tree.Insert("slepice");
         tree.Insert("linoleum");
-        Assert.That(tree.GetBalance(tree.Root), Is.InRange(-1,1));
+        Assert.That(tree.GetBalance(tree.Root!), Is.InRange(-1,1));
     }
 
     [Test]
@@ -206,7 +205,20 @@ public class Tests
         tree.Insert(9);
         tree.Delete(2);
         tree.Delete(2);
-        Assert.That(tree.GetBalance(tree.Root), Is.InRange(-1, 1));
+        Assert.That(tree.GetBalance(tree.Root!), Is.InRange(-1, 1));
+    }
+    [Test]
+    public void TestDeleteRoot()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(10);
+        tree.Insert(20);
+        tree.Insert(5);
+        tree.Insert(15);
+        Assert.That(tree.Root!.Value, Is.EqualTo(10));
+        tree.Delete(10);
+        Assert.That(tree.Root, Is.Not.Null);
+        Assert.That(tree.GetBalance(tree.Root!), Is.InRange(-1, 1));
     }
 
     [Test]
@@ -270,5 +282,22 @@ public class Tests
         tree.Delete(2);
         tree.Delete(1);
         Assert.That(tree.InRange(0,12), Is.EqualTo(5));
+    }
+
+    [Test]
+    public void TestInOrder()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        tree.Insert(9);
+        System.Collections.Generic.List<int> list = new System.Collections.Generic.List<int>(); ;
+        foreach(var value in tree.DFSInOrder())
+            list.Add(value);
+        Assert.That(list[0], Is.EqualTo(-5));
+        Assert.That(list[1], Is.EqualTo(1));
     }
 }
