@@ -1,10 +1,14 @@
 namespace AVL;
-
-public class AVLTree<T> where T : System.IComparable
+/// <summary>
+/// This is a library providing a generic-type implementation of AVL trees.
+/// </summary>
+/// <typeparam name="T">
+/// Specifies the data type that the nodes save. Must be derived from System.IComparable
+/// </typeparam>
+public class AVLTree<T> where T : System.IComparable<T>
 {
     public Node<T>? Root { get; private set; }
     public int Count { get; private set; }
-
 
     /// <summary>
     /// Returns the value of root node.
@@ -126,7 +130,7 @@ public class AVLTree<T> where T : System.IComparable
 
     /// <summary>
     /// Finds and returns a node in the tree using binary search. Thanks to the fact that the tree is balanced, function
-    /// takes O(log(N)) time where N is the count of nodes in tree. Returns null if node with given value is not found.
+    /// takes O(H) time where H is the height of the tree. Returns null if node with given value is not found.
     /// </summary>
     /// <param name="value">Value of the node function will try to find.</param>
     /// <returns>Node with given value, null if no such node found.</returns>
