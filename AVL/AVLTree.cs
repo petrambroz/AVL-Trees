@@ -181,4 +181,51 @@ public class AVLTree<T> where T : System.IComparable
         return node;
     }
 
+    /// <summary>
+    /// Deletes a node with given value from the tree. If there's no such node in the tree, nothing is deleted.
+    /// </summary>
+    /// <param name="value">Value of the node that should be deleted.</param>
+    /// <returns>True if a node was deleted, false otherwise. </returns>
+    public bool Delete(T value)
+    {
+        bool deleted = false;
+
+        if (Root is not null)
+            Root = Delete(Root, value, ref deleted);
+        return deleted;
+    }
+
+    private Node<T>? Delete(Node<T>? node, T value, ref bool deleted)
+    {
+        if (node is null)
+            return null;
+        if (value.CompareTo(node.Value) < 0)
+            node.Left = Delete(node.Left, value, ref deleted);
+        else if (value.CompareTo(node.Value) > 0)
+            node.Right = Delete(node.Right, value, ref deleted);
+        else
+        {
+            if (node.Left is null || node.Right is null)
+            {
+                Node<T>? next = (node.Left ?? node.Right)!;
+                node = next ?? null;
+                Count--;
+                deleted = true;
+            }
+            else
+            {
+                Node<T> temp = FindMin(node.Right);
+                node = new Node<T>(temp.Value, node.Left, node.Right);
+                node.Right = Delete(node.Right, temp.Value, ref deleted);
+            }
+        }
+
+        if (node is not null)
+        {
+            node.Height = 1 + System.Math.Max(Height(node.Left), Height(node.Right));
+            return BalanceNode(node, node.Value);
+        }
+
+        return null;
+    }
 }
