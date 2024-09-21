@@ -300,4 +300,46 @@ public class Tests
         Assert.That(list[0], Is.EqualTo(-5));
         Assert.That(list[1], Is.EqualTo(1));
     }
+
+    [Test]
+    public void TestToString()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        tree.Insert(9);
+        Assert.That(tree.ToString(), Is.EqualTo("-5 1 2 3 4 9 "));
+    }
+
+    [Test]
+    public void TestClone()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        AVLTree<int> clonedTree = tree.Clone();
+        Assert.That(tree.ToString(), Is.EqualTo(clonedTree.ToString()));
+    }
+
+    [Test]
+    public void TestMerge()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        AVLTree<int> tree2 = new AVLTree<int>();
+        tree2.Insert(9);
+        tree2.Insert(-1);
+        tree.Merge(tree2);
+        Assert.That(tree.ToString(), Is.EqualTo("-5 -1 1 2 3 4 9 "));
+    }
 }

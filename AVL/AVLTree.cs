@@ -336,10 +336,10 @@ public class AVLTree<T> where T : System.IComparable<T>
     }
 
     /// <summary>
-    /// Finds and returns a node which
+    /// Returns an in-order successor of a node with given value, i.e. the smallest larger node.
     /// </summary>
     /// <param name="value"></param>
-    /// <returns></returns>
+    /// <returns>An in-order successor node. Null if no larger node exists or initial value not found in tree</returns>
     public Node<T>? Next(T value)
     {
         // finds a succesor to a node with given value, return null if doesn't exist
@@ -396,5 +396,78 @@ public class AVLTree<T> where T : System.IComparable<T>
         if (node.Value.CompareTo(low) < 0)
             return InRange(node.Right, low, high);
         return InRange(node.Left, low, high);
+    }
+    /// <summary>
+    /// Converts the tree to a string representation.
+    /// </summary>
+    /// <returns>String representation of the tree in in-order traversal.</returns>
+    public override string ToString()
+    {
+        var result = new System.Text.StringBuilder();
+        foreach (var value in DFSInOrder())
+        {
+            result.Append(value.ToString());
+            result.Append(' ');
+        }
+        return result.ToString();
+    }
+    /// <summary>
+    /// Validates whether the tree is correctly balanced and adheres to AVL properties.
+    /// </summary>
+    /// <returns>True if the tree is valid, false otherwise.</returns>
+    public bool Validate()
+    {
+        return Validate(Root);
+    }
+
+    private bool Validate(Node<T>? node)
+    {
+        if (node is null)
+            return true;
+
+        int balance = GetBalance(node);
+        if (balance < -1 || balance > 1)
+            return false;
+
+        return Validate(node.Left) && Validate(node.Right);
+    }
+    /// <summary>
+    /// Creates a deep 1:1 copy of the tree.
+    /// </summary>
+    /// <returns>An AVLTree object.</returns>
+    public AVLTree<T> Clone()
+    {
+        AVLTree<T> clonedTree = new AVLTree<T>();
+        clonedTree.Root = CloneNode(Root);
+        clonedTree.Count = Count;
+        return clonedTree;
+    }
+
+    private Node<T>? CloneNode(Node<T>? node)
+    {
+        if (node is null)
+            return null;
+
+        Node<T> clonedNode = new Node<T>(node.Value)
+        {
+            Left = CloneNode(node.Left),
+            Right = CloneNode(node.Right),
+            Height = node.Height
+        };
+        return clonedNode;
+    }
+    /// <summary>
+    /// Merges another tree into this one.
+    /// </summary>
+    /// <param name="otherTree">Another AVLTree object. Must be using same data type.</param>
+    public void Merge(AVLTree<T> otherTree)
+    {
+        if (otherTree.Root is null)
+            return;
+
+        foreach (var value in otherTree.DFSInOrder())
+        {
+            Insert(value);
+        }
     }
 }
