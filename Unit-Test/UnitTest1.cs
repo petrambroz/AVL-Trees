@@ -342,4 +342,54 @@ public class Tests
         tree.Merge(tree2);
         Assert.That(tree.ToString(), Is.EqualTo("-5 -1 1 2 3 4 9 "));
     }
+
+    [Test]
+    public void TestLargerThanCount()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(12);
+        tree.Insert(0);
+        tree.Insert(56);
+        tree.Insert(-3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        tree.Insert(9);
+        Assert.That(tree.CountLargerThan(4), Is.EqualTo(3));
+    }
+    [Test]
+    public void TestLargerThanCountMaximumNode()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(12);
+        tree.Insert(0);
+        tree.Insert(56);
+        tree.Insert(-3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        tree.Insert(9);
+        Assert.That(tree.CountLargerThan(56), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void TestSmallerThanCount()
+    {
+        AVLTree<int> tree = new AVLTree<int>();
+        tree.Insert(1);
+        tree.Insert(2);
+        tree.Insert(3);
+        tree.Insert(12);
+        tree.Insert(0);
+        tree.Insert(56);
+        tree.Insert(-3);
+        tree.Insert(-5);
+        tree.Insert(4);
+        tree.Insert(9);
+        Assert.That(tree.CountSmallerThan(0), Is.EqualTo(2));
+    }
 }
