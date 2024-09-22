@@ -92,7 +92,6 @@ public class AVLTree<T> where T : System.IComparable<T>
         }
     }
 
-
     private System.Collections.Generic.IEnumerable<T> DFS(TraversalOrder order)
     {
         return DFS(Root, order);
@@ -118,7 +117,6 @@ public class AVLTree<T> where T : System.IComparable<T>
         if (order == TraversalOrder.PostOrder)
             yield return node.Value;
     }
-
 
 
     /// <summary>
@@ -377,7 +375,7 @@ public class AVLTree<T> where T : System.IComparable<T>
     /// Returns a number of nodes, which have a value in a given closed interval.
     /// </summary>
     /// <param name="low">Lower endpoint of the interval.</param>
-    /// <param name="high">Higher endpoint of the interval.</param>
+    /// <param name="high">Upper endpoint of the interval.</param>
     /// <returns>Number of nodes in the given interval.</returns>
     public int InRange(T low, T high)
     {
@@ -397,6 +395,7 @@ public class AVLTree<T> where T : System.IComparable<T>
             return InRange(node.Right, low, high);
         return InRange(node.Left, low, high);
     }
+
     /// <summary>
     /// Converts the tree to a string representation.
     /// </summary>
@@ -406,11 +405,12 @@ public class AVLTree<T> where T : System.IComparable<T>
         var result = new System.Text.StringBuilder();
         foreach (var value in DFSInOrder())
         {
-            result.Append(value.ToString());
+            result.Append(value);
             result.Append(' ');
         }
         return result.ToString();
     }
+
     /// <summary>
     /// Validates whether the tree is correctly balanced and adheres to AVL properties.
     /// </summary>
@@ -428,9 +428,12 @@ public class AVLTree<T> where T : System.IComparable<T>
         int balance = GetBalance(node);
         if (balance < -1 || balance > 1)
             return false;
+        if (node.Left?.Value.CompareTo(node.Value) >= 0 || node.Right?.Value.CompareTo(node.Value) <= 0)
+            return false;
 
         return Validate(node.Left) && Validate(node.Right);
     }
+
     /// <summary>
     /// Creates a deep 1:1 copy of the tree.
     /// </summary>
@@ -456,6 +459,7 @@ public class AVLTree<T> where T : System.IComparable<T>
         };
         return clonedNode;
     }
+
     /// <summary>
     /// Merges another tree into this one.
     /// </summary>
@@ -466,8 +470,75 @@ public class AVLTree<T> where T : System.IComparable<T>
             return;
 
         foreach (var value in otherTree.DFSInOrder())
-        {
             Insert(value);
+    }
+
+    /// <summary>
+    /// Creates a list of nodes with values in given interval.
+    /// </summary>
+    /// <param name="low">Lower endpoint of the interval.</param>
+    /// <param name="high">Upper endpoint of the interval.</param>
+    /// <returns>List of nodes with matching values.</returns>
+    public System.Collections.Generic.List<T> GetNodesInRange(T low, T high)
+    {
+        System.Collections.Generic.List<T> nodes = new System.Collections.Generic.List<T>();
+        GetNodesInRange(Root, low, high, nodes);
+        return nodes;
+    }
+
+    private void GetNodesInRange(Node<T>? node, T low, T high, System.Collections.Generic.List<T> result)
+    {
+        if (node is null)
+            return;
+
+        if (node.Value.CompareTo(low) > 0)
+            GetNodesInRange(node.Left, low, high, result);
+
+        if (node.Value.CompareTo(low) >= 0 && node.Value.CompareTo(high) <= 0)
+            result.Add(node.Value);
+
+        if (node.Value.CompareTo(high) < 0)
+            GetNodesInRange(node.Right, low, high, result);
+    }
+
+    /// <summary>
+    /// Counts the number of nodes in the AVL tree that have a value larger than the specified value.
+    /// </summary>
+    /// <param name="value">The value to compare against.</param>
+    /// <returns>The number of nodes with a value larger than the this value.</returns>
+    public int CountLargerThan(T value)
+    {
+        return CountLargerThan(Root, value);
+    }
+    private int CountLargerThan(Node<T>? node, T value)
+    {
+        while (node is not null)
+        {
+            if (node.Value.CompareTo(value) > 0)
+                return 1 + CountLargerThan(node.Left, value) + CountLargerThan(node.Right, value);
+            node = node.Right;
         }
+        return 0;
+    }
+
+    /// <summary>
+    /// Counts the number of nodes in the AVL tree that have a value smaller than the specified value.
+    /// </summary>
+    /// <param name="value">The value to compare against.</param>
+    /// <returns>The number of nodes with a value smaller than the this value.</returns>
+    public int CountSmallerThan(T value)
+    {
+        return CountSmallerThan(Root, value);
+    }
+
+    private int CountSmallerThan(Node<T>? node, T value)
+    {
+        while (node is not null)
+        {
+            if (node.Value.CompareTo(value) < 0)
+                return 1 + CountSmallerThan(node.Left, value) + CountSmallerThan(node.Right, value);
+            node = node.Left;
+        }
+        return 0;
     }
 }
