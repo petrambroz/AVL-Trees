@@ -41,23 +41,23 @@ should be replaced by any data type derived from System.IComparable, such as `in
 
 ### Overview of public methods and functions
 
-* `Count()` -- returns an Int32 indicating the current number of nodes present in the tree
-* `BFS()` -- same as DFS functions, uses breadth first search
-* `Delete(value)` -- deletes a node with given value from the tree, return true if successful, false if no node with given value exists
-* `DFSInorder()`, `DFSPreorder()`, `DFSPostorder()` -- IEnumerable, which can be used in a e.g. in a foreach loop, traversing the tree in either pre-order, post-order or in-order depth first search traversal, yields node objects
-* `Clone()` -- Creates a deep 1:1 copy of the tree.
-* `Find(value)` -- returns a node with given value, null if no such node exists in the tree
-* `FindMax()` -- returns the largest (rightmost) node in the tree, null if tree is empty
-* `FindMin()` -- returns the smallest (leftmost) node in the tree, null if tree is empty
-* `GetBalance(node object)` -- returns a balance of given node -- height of right subtree - height of left subtree
-* `GetNodesInRange(low, high)` -- returns a System.Collections.Generic.List<T> list of nodes with values in given interval, low is the start of the interval, high is the end
-* `InRange(low, high)` --  returns a number of nodes, which have a value in a given closed interval, low and high same as in `GetNodesInRange`
-* `Insert(value)` -- inserts a new node into tree, returns true if node was inserted, false if node with same value was already present
-* `Merge(tree object)` -- merges another tree into this one
-* `Next()` -- returns a successor (smallest larger node) to a node with given value, returns null if node with given value wasn't found or the node is the largest node in the tree
-* `RootValue()` -- returns the value of root node
-* `ToString()` -- converts the tree to a string representation
-* `Validate()` -- checks the validity of the tree by going through all nodes and verifying they adhere to AVL properties. Useful for testing and debugging.
+* `Count()` - returns an Int32 indicating the current number of nodes present in the tree
+* `BFS()` - same as DFS functions, uses breadth first search
+* `Delete(value)` - deletes a node with given value from the tree, return true if successful, false if no node with given value exists
+* `DFSInorder()`, `DFSPreorder()`, `DFSPostorder()` - IEnumerable, which can be used in a e.g. in a foreach loop, traversing the tree in either pre-order, post-order or in-order depth first search traversal, yields node objects
+* `Clone()` - Creates a deep 1:1 copy of the tree.
+* `Find(value)` - returns a node with given value, null if no such node exists in the tree
+* `FindMax()` - returns the largest (rightmost) node in the tree, null if tree is empty
+* `FindMin()` - returns the smallest (leftmost) node in the tree, null if tree is empty
+* `GetBalance(node object)` - returns a balance of given node - height of right subtree - height of left subtree
+* `GetNodesInRange(low, high)` - returns a System.Collections.Generic.List<T> list of nodes with values in given interval, low is the start of the interval, high is the end
+* `InRange(low, high)` -  returns a number of nodes, which have a value in a given closed interval, low and high same as in `GetNodesInRange`
+* `Insert(value)` - inserts a new node into tree, returns true if node was inserted, false if node with same value was already present
+* `Merge(tree object)` - merges another tree into this one
+* `Next()` - returns a successor (smallest larger node) to a node with given value, returns null if node with given value wasn't found or the node is the largest node in the tree
+* `RootValue()` - returns the value of root node
+* `ToString()` - converts the tree to a string representation
+* `Validate()` - checks the validity of the tree by going through all nodes and verifying they adhere to AVL properties. Useful for testing and debugging.
 
 ## Information for programmers
 
@@ -76,8 +76,8 @@ to breaking the BST condition. Height and child nodes can only be changed by thi
 
 ### Nodes
 
-As long as the Node class contains the original values, it's possible to add more properties to it so it cal hold more
-useful data.
+As long as the Node class contains the original properties, it's possible to add more 'data' properties to it so it can hold more
+useful data. The node is always sorted based on the `Value` property.
 
 ### Validity
 
