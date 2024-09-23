@@ -41,27 +41,49 @@ should be replaced by any data type derived from System.IComparable, such as `in
 
 ### Overview of public methods and functions
 
-* `Count()` - returns an Int32 indicating the current number of nodes present in the tree
-* `BFS()` - same as DFS functions, uses breadth first search
+* `Count` - returns an Int32 indicating the current number of nodes present in the tree
+  * example use: `int countOfNodes = tree.Count`
 * `Delete(value)` - deletes a node with given value from the tree, return true if successful, false if no node with given value exists
+  * example use: `tree.Delete(8)`
 * `DFSInorder()`, `DFSPreorder()`, `DFSPostorder()` - IEnumerable, which can be used in a e.g. in a foreach loop, traversing the tree in either pre-order, post-order or in-order depth first search traversal, yields node objects
+  * example use: `foreach (var value in tree.DFSPreOrder()) ...`
+* `BFS()` - same as DFS functions, uses breadth first search
+  * example use: `foreach (var value in tree.BFS) ...`
 * `Clone()` - Creates a deep 1:1 copy of the tree.
+  * example use: `AVLTree<int> treeCopy = tree.Clone()`
 * `Find(value)` - returns a node with given value, null if no such node exists in the tree
+  * example use: `Node<int> node = tree.Find(5)`
 * `FindMax()` - returns the largest (rightmost) node in the tree, null if tree is empty
 * `FindMin()` - returns the smallest (leftmost) node in the tree, null if tree is empty
 * `GetBalance(node object)` - returns a balance of given node - height of right subtree - height of left subtree
+  * example use: `int balance = tree.GetBalance(tree.find(3))`
 * `GetNodesInRange(low, high)` - returns a System.Collections.Generic.List<T> list of nodes with values in given interval, low is the start of the interval, high is the end
+  * example use: `var listOfNodes = tree.GetNodesInRange(3,13)`
 * `InRange(low, high)` -  returns a number of nodes, which have a value in a given closed interval, low and high same as in `GetNodesInRange`
+  * example use: `int 4to12 = tree.InRange(4,12)`
 * `Insert(value)` - inserts a new node into tree, returns true if node was inserted, false if node with same value was already present
+  * example use: `tree.Insert(12)`
 * `Merge(tree object)` - merges another tree into this one
+  * example use: `tree.Merge(anotherTree)`
 * `Next()` - returns a successor (smallest larger node) to a node with given value, returns null if node with given value wasn't found or the node is the largest node in the tree
+  * example use: `Node<int> next = tree.Next(4)`
 * `RootValue()` - returns the value of root node
+  * example use: `int rootVal = tree.RootValue()`
 * `ToString()` - converts the tree to a string representation
+  * example use: `string treeString = tree.ToString()`
 * `Validate()` - checks the validity of the tree by going through all nodes and verifying they adhere to AVL properties. Useful for testing and debugging.
+  * example use: `bool valid = Tree.Validate()`
 
 ## Information for programmers
 
 If you wish to modify or extend anything in this library, I'll try to provide some useful information to make it easier.
+
+## Object design
+
+The library consists of two classes: a `Node<T>` class and a `AVLTree<T>` class. The Node class is responsible for saving
+data and links to successors. It has two constructors, one for creating a new node with a value and no children and one 
+for creating node while setting its value and both successors. 
+The AVLTree class implements all the tree operations. 
 
 ### Encapsulation
 
@@ -84,3 +106,39 @@ useful data. The node is always sorted based on the `Value` property.
 When implementing any structure changing functions, make use of the `Validate()` function. It checks the whole tree for
 balance and that it is a proper binary search tree. This function should ideally return true 100% of time. If it doesn't,
 start debugging.
+
+### Unit tests
+
+The library provides many unit tests that check individual functions and if they return expected results. Tests are also
+run with each git push to the repository.
+
+#### Tests
+
+* `TestBalance` - test if inserting into the tree maintains balance
+* `TestBalance2` - same as previous
+* `TestClone` - test if cloned tree is equal to the original tree
+* `TestCount` - test if nodes are counted correctly
+* `TestDelete` - test if the Delete function really deletes the nodes, and doesn't delete anything when value not present in tree
+* `TestDeleteBalance` - test if deleting nodes doesn't mess up tree balance
+* `TestDeleteRoot` - test if trying to delete the root doesn't cause problems
+* `TestEmptyInsertion` - test if inserting into empty tree is handled correctly
+* `TestEmptyTree` - test if an exception is thrown when trying to access a root value of an empty tree
+* `TestFind` - test if the Find functions returns a correct value
+* `TestFindMax` - test if the FindMax functions returns a correct value 
+* `TestFindMin` - test if the FindMin functions returns a correct value
+* `TestFindNull` - test if trying to find a value not in tree returns false
+* `TestInOrder` - test DFS in-order traversal
+* `TestInRange` - tests the InRange(low, high) function
+* `TestInRange2` - test the InRange function after multiple insertions and deletions
+* `TestLargerThanCount` - test if the CountLargerThan function returns a correct value
+  * `TestLargerThanCountMaximumNode - test if the CountLargerThan function returns a correct value when asked to find the
+  max value in the tree
+* `TestMerge` - tests if merging two trees results in a correct tree
+* `TestNext` - test if the Next function returns a correct value
+* `TestNextOfMaximum` - tests if trying to find a successor to a maximum value returns null
+* `TestRepeatedInsert` - tests if repeated insertion doesn't insert the value twice
+* `TestRotations` - test if repeated insertions maintain balance of the tree
+* `TestRotationsWithStrings` - test if repeated string insertions maintain balance of the tree
+* `TestSimpleInsert` - test if a very simple insertion is handled correctly
+* `TestSmallerThanCount` -- test is the CountSmallerThan(low, high) function returns a correct result
+* `TestToString` - test if the tree is converted to a correct string

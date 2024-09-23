@@ -13,6 +13,7 @@ public class Tests
     [Test]
     public void TestEmptyInsertion()
     {
+        // test if inserting into empty tree is handled correctly
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(5);
         Assert.That(tree.RootValue(), Is.EqualTo(5));
@@ -33,6 +34,7 @@ public class Tests
     [Test]
     public void TestSimpleInsert()
     {
+        // test if a very simple insertion is handled correctly
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(6);
         tree.Insert(4);
@@ -44,6 +46,7 @@ public class Tests
     [Test]
     public void TestRepeatedInsert()
     {
+        // tests if repeated insertion doesn't insert the value twice
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(5);
         tree.Insert(3);
@@ -57,6 +60,7 @@ public class Tests
     [Test]
     public void TestBalance()
     {
+        // test if inserting into the tree maintains balance
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(6);
         tree.Insert(4);
@@ -78,6 +82,7 @@ public class Tests
     [Test]
     public void TestFind()
     {
+        // test if the Find functions returns a correct value
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(5);
         tree.Insert(7);
@@ -90,6 +95,7 @@ public class Tests
     [Test]
     public void TestFindNull()
     {
+        // test if trying to find a value not in tree returns false
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(5);
         tree.Insert(7);
@@ -102,6 +108,7 @@ public class Tests
     [Test]
     public void TestFindMax()
     {
+        // test if the FindMax functions returns a correct value
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(6);
         tree.Insert(2);
@@ -120,6 +127,7 @@ public class Tests
     [Test]
     public void TestFindMin()
     {
+        // test if the FindMin functions returns a correct value
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(6);
         tree.Insert(2);
@@ -137,6 +145,7 @@ public class Tests
     [Test]
     public void TestRotations()
     {
+        // test if repeated insertions maintain balace of the tree
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -144,12 +153,13 @@ public class Tests
         tree.Insert(5);
         tree.Insert(4);
         tree.Insert(9);
-        Assert.That(tree.GetBalance(tree.Root!), Is.InRange(-1,1));
+        Assert.That(tree.Validate(), Is.True);
     }
 
     [Test]
     public void TestRotationsWithStrings()
     {
+        // test if repeated string insertions maintain balace of the tree
         AVLTree<string> tree = new AVLTree<string>();
         tree.Insert("ahoj");
         tree.Insert("cauky");
@@ -163,6 +173,7 @@ public class Tests
     [Test]
     public void TestCount()
     {
+        // test if nodes are counted correctly
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(5);
@@ -179,6 +190,7 @@ public class Tests
     [Test]
     public void TestDelete()
     {
+        // test if the Delete function really deletes the nodes, and doesn't delete anything when value not present in tree
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -196,6 +208,7 @@ public class Tests
     [Test]
     public void TestDeleteBalance()
     {
+        // test if deleting nodes doesn't mess up tree balance
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -205,11 +218,12 @@ public class Tests
         tree.Insert(9);
         tree.Delete(2);
         tree.Delete(2);
-        Assert.That(tree.GetBalance(tree.Root!), Is.InRange(-1, 1));
+        Assert.That(tree.Validate(), Is.True);
     }
     [Test]
     public void TestDeleteRoot()
     {
+        // test if trying to delete the root doesn't cause problems
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(10);
         tree.Insert(20);
@@ -218,12 +232,13 @@ public class Tests
         Assert.That(tree.Root!.Value, Is.EqualTo(10));
         tree.Delete(10);
         Assert.That(tree.Root, Is.Not.Null);
-        Assert.That(tree.GetBalance(tree.Root!), Is.InRange(-1, 1));
+        Assert.That(tree.Validate(), Is.True);
     }
 
     [Test]
     public void TestNext()
     {
+        // test if the Next function returns a correct value
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(6);
         tree.Insert(2);
@@ -239,6 +254,7 @@ public class Tests
     [Test]
     public void TestNextOfMaximum()
     {
+        // tests if trying to find a successor to a maximum value returns null
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(6);
         tree.Insert(2);
@@ -254,6 +270,7 @@ public class Tests
     [Test]
     public void TestInRange()
     {
+        // tests the InRange(low, high) function
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -268,6 +285,7 @@ public class Tests
     [Test]
     public void TestInRange2()
     {
+        // test the InRange function after multiple insertions and deletions
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -287,6 +305,7 @@ public class Tests
     [Test]
     public void TestInOrder()
     {
+        // test DFS in-order traversal
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -304,6 +323,7 @@ public class Tests
     [Test]
     public void TestToString()
     {
+        // test if the tree is converted to a correct string
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -317,6 +337,7 @@ public class Tests
     [Test]
     public void TestClone()
     {
+        // test if cloned tree is equal to the original tree
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -330,6 +351,7 @@ public class Tests
     [Test]
     public void TestMerge()
     {
+        // tests if merging two trees results in a correct tree
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -346,6 +368,7 @@ public class Tests
     [Test]
     public void TestLargerThanCount()
     {
+        // test if the CountLargerThan function returns a correct value
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -362,6 +385,7 @@ public class Tests
     [Test]
     public void TestLargerThanCountMaximumNode()
     {
+        // test is the CountLargerThan(low, high) function returns a correct result
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
@@ -379,6 +403,7 @@ public class Tests
     [Test]
     public void TestSmallerThanCount()
     {
+        // test is the CountSmallerThan(low, high) function returns a correct result
         AVLTree<int> tree = new AVLTree<int>();
         tree.Insert(1);
         tree.Insert(2);
