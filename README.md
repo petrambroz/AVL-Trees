@@ -1,6 +1,6 @@
 # Programming II semester project
 
-This is a semester programming project for the Programming II (NPRG031) subject at Charles University.
+This is a semester programming project for the Programming II (NPRG031) course at Charles University.
 The topic of this project is AVL tree library.
 The project is developed and maintained by Petr Ambrož.
 
